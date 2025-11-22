@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Deli & Grocery | Fresh Food, Fast in Dover, FL</title>
+    <meta name="description" content="The official website for Country Deli & Grocery. Explore our interactive menu of fresh pizza, burgers, subs, and salads. Call ahead for quick pickup!">
+
+    <!-- Using a placeholder logo for demonstration -->
+    <link rel="icon" href="https://placehold.co/64x64/E55934/FFFFFF?text=CD" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ------------------- */
+        /* Custom Properties   */
+        /* ------------------- */
+        :root {
+            --bg: #FDFCFB; /* Warmer off-white */
+            --bg-alt: #FFFFFF;
+            --text: #2c2a29; /* Darker, softer black */
+            --text-muted: #6C757D;
+            --border: #EAE8E6;
+            --primary: #4A57A0; /* Calmer Blue */
+            --primary-light: #7B88D1;
+            --accent: #E55934; /* Richer Orange */
+            --accent-glow: rgba(229, 89, 52, 0.4);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.dark-mode {
+            --bg: #1a1817;
+            --bg-alt: #252322;
+            --text: #E0E0E0;
+            --text-muted: #A0A0A0;
+            --border: #3d3b3a;
+            --primary: #7B88D1;
+            --primary-light: #A7B4FF;
+            --accent: #F48A3B;
+            --accent-glow: rgba(244, 138, 59, 0.4);
+        }
+
+        /* ------------------- */
+        /* Reset & Globals     */
+        /* ------------------- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            /* Added subtle background texture */
+            background-image: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png');
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition), color var(--transition);
+        }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; line-height: 1.2; font-weight: 800; }
+        h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); color: var(--text); }
+        h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); color: var(--primary); text-align: center; }
+        h3 { font-size: 1.25rem; color: var(--accent); }
+        h4 { font-size: 1.1rem; color: var(--primary); }
+        a { color: var(--accent); text-decoration: none; transition: color var(--transition); }
+        a:hover { color: var(--primary); }
+        ul { list-style: none; padding: 0; margin: 0; }
+        img { max-width: 100%; height: auto; display: block; }
+        .wrapper { max-width: 1200px; margin-inline: auto; padding-inline: 1.5rem; }
+
+        /* ------------------- */
+        /* Header              */
+        /* ------------------- */
+        .main-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding-block: 1rem;
+            background-color: color-mix(in srgb, var(--bg-alt) 85%, transparent);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color var(--transition), border-color var(--transition);
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
+        .logo img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; } /* Changed to circle */
+        .nav-menu { display: flex; align-items: center; gap: 0.5rem; }
+        .nav-menu ul { display: flex; gap: 0.5rem; }
+        .nav-menu a {
+            display: block; padding: 0.5rem 1rem; border-radius: var(--radius);
+            font-weight: 600; color: var(--text-muted); position: relative;
+        }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--text); background-color: color-mix(in srgb, var(--primary) 10%, transparent); }
+        .theme-toggle, .nav-toggle {
+            display: flex; align-items: center; justify-content: center; background-color: var(--bg-alt);
+            border: 1px solid var(--border); border-radius: var(--radius); width: 44px; height: 44px; cursor: pointer;
+            color: var(--text-muted); transition: all var(--transition);
+        }
+        .theme-toggle:hover, .nav-toggle:hover { color: var(--primary); border-color: var(--primary); }
+        .theme-toggle svg, .nav-toggle svg { width: 24px; height: 24px; }
+        .nav-toggle { display: none; }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none; position: absolute; top: 100%; left: 0; right: 0;
+                background-color: var(--bg-alt); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg);
+            }
+            .nav-menu.open { display: block; }
+            .nav-menu ul { flex-direction: column; padding: 1rem; }
+            .nav-menu li { width: 100%; }
+            .nav-toggle { display: flex; }
+        }
+
+        /* ------------------- */
+        /* Hero Section        */
+        /* ------------------- */
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 20px var(--accent-glow); } 50% { box-shadow: 0 0 35px var(--accent-glow); } }
+        .hero {
+            padding-block: clamp(6rem, 20vh, 12rem); margin-top: 70px; text-align: center;
+            position: relative;
+            background-image: url('https://images.pexels.com/photos/2271107/pexels-photo-2271107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            z-index: 1;
+        }
+        /* Added an overlay for text readability */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.55);
+            z-index: -1;
+        }
+        .hero h1 { color: white; }
+        .hero .wrapper { max-width: 800px; display: grid; gap: 1.5rem; justify-items: center; }
+        .hero p { font-size: 1.125rem; color: rgba(255, 255, 255, 0.9); max-width: 600px; }
+        .hero .highlight {
+            color: #F48A3B; /* Use a bright color directly for the highlight on dark background */
+        }
+        .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
+        .cta-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 2rem; border-radius: 50px;
+            font-weight: 700; font-family: 'Montserrat', sans-serif; color: #fff;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+            background-size: 200% 100%; border: none; cursor: pointer;
+            transition: all 0.4s ease;
+            animation: pulse-glow 3s infinite;
+        }
+        .cta-btn:hover { background-position: 100% 0; animation-play-state: paused; transform: scale(1.05); }
+        .cta-btn svg { transition: transform 0.3s ease; }
+        .cta-btn:hover svg { transform: translateX(4px); }
+
+        /* ------------------- */
+        /* General Content     */
+        /* ------------------- */
+        .content-section { padding-block: 5rem; }
+        .content-section:nth-of-type(even) { background-color: var(--bg-alt); }
+        .content-section h2 { margin-bottom: 3rem; position: relative; }
+        .content-section h2::after {
+            content: ''; position: absolute; bottom: -1rem; left: 50%;
+            transform: translateX(-50%); width: 60px; height: 4px;
+            background-color: var(--accent); border-radius: 2px;
+        }
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s var(--transition), transform 0.8s var(--transition);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        
+        /* Glassmorphism Effect */
+        .glass-card {
+            background-color: color-mix(in srgb, var(--bg-alt) 70%, transparent);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Why Choose Us Section */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; max-width: 1000px; margin-inline: auto;
+        }
+        .feature-card {
+            border-radius: var(--radius); padding: 2rem; text-align: center;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .feature-card .icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+            color: var(--primary); width: 64px; height: 64px; border-radius: 50%; margin-bottom: 1rem;
+        }
+        .feature-card .icon svg { width: 32px; height: 32px; }
+        .feature-card h3 { color: var(--primary); margin-top: 0; }
+        .feature-card .description { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* ------------------- */
+        /* Menu Section        */
+        /* ------------------- */
+        .menu-filters {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem;
+        }
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            color: var(--text-muted); border-radius: 50px; cursor: pointer;
+            font-weight: 600; border: 1px solid transparent; /* Added for smoother transition */
+            transition: all var(--transition);
+        }
+        .filter-btn:hover { color: var(--primary); background-color: color-mix(in srgb, var(--border) 100%, transparent); }
+        .filter-btn.active { background-color: var(--primary); color: white; border-color: var(--primary); }
+        
+        .menu-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;
+        }
+        .menu-category {
+            background-color: var(--bg-alt); border-radius: var(--radius); box-shadow: var(--shadow-md);
+            overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--border);
+            transition: transform var(--transition), box-shadow var(--transition), opacity 0.4s ease;
+        }
+        .menu-category.hidden { transform: scale(0.9); opacity: 0; height: 0; padding: 0; margin: 0; border: none; overflow: hidden; }
+        .menu-category:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .menu-img { width: 100%; height: 220px; object-fit: cover; } /* Increased image height */
+        .menu-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .menu-content h3 { margin-top: 0; margin-bottom: 0.25rem; }
+        .menu-content .menu-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; flex-grow: 1; }
+        .menu-items { display: flex; flex-direction: column; gap: 0.75rem; }
+        .menu-item {
+            display: flex; justify-content: space-between; align-items: baseline;
+            gap: 1rem; padding-bottom: 0.75rem; border-bottom: 1px dashed var(--border);
+        }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item span:first-child { color: var(--text); font-weight: 500; }
+        .menu-item span:last-child { color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+
+        /* ------------------- */
+        /* Hours & Contact     */
+        /* ------------------- */
+        .info-grid {
+            display: grid; grid-template-columns: 1fr; gap: 3rem; max-width: 900px; margin-inline: auto;
+        }
+        @media (min-width: 768px) { .info-grid { grid-template-columns: repeat(2, 1fr); align-items: start; } }
+        .info-card {
+            background-color: var(--bg-alt);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+        }
+        .info-card h3 {
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            margin-bottom: 1.5rem; color: var(--primary); margin-top: 0;
+        }
+        .info-card svg { width: 24px; height: 24px; stroke: var(--primary); }
+        .hours-list li {
+            display: flex; justify-content: space-between; padding: 0.85rem; border-radius: var(--radius);
+            margin-bottom: 0.5rem; transition: background-color var(--transition);
+        }
+        .hours-list li.current-day { background-color: color-mix(in srgb, var(--accent) 15%, transparent); font-weight: 700; }
+        #hours-status { text-align: center; margin-top: 1rem; font-weight: 700; }
+        #hours-status .status-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem; }
+        #hours-status.open { color: #28a745; }
+        #hours-status.open .status-dot { background-color: #28a745; }
+        #hours-status.closed { color: #dc3545; }
+        #hours-status.closed .status-dot { background-color: #dc3545; }
+        
+        .contact-list { display: grid; gap: 1rem; justify-items: center; text-align: center; }
+        .contact-list p { margin: 0; color: var(--text-muted); }
+        .contact-link {
+            font-size: 1.1rem; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: var(--radius);
+            background-color: var(--bg); border: 2px solid var(--border); transition: all var(--transition);
+        }
+        .contact-link:hover { background-color: var(--primary); color: #fff; border-color: var(--primary); transform: scale(1.05); }
+        
+        /* ------------------- */
+        /* Footer & Back to Top*/
+        /* ------------------- */
+        .main-footer {
+            background-color: var(--bg-alt); border-top: 1px solid var(--border); padding: 3rem 1.5rem 2rem;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem; max-width: 1200px; margin-inline: auto; margin-bottom: 2rem;
+        }
+        .footer-col p, .footer-col a { color: var(--text-muted); font-size: 0.95rem; }
+        .footer-col a:hover { color: var(--accent); }
+        .footer-col ul { display: grid; gap: 0.5rem; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-links a { color: var(--text-muted); }
+        .social-links a:hover { color: var(--primary); transform: scale(1.1); }
+        .social-links svg { width: 24px; height: 24px; transition: transform var(--transition); }
+        .copyright {
+            text-align: center; color: var(--text-muted); font-size: 0.9rem;
+            border-top: 1px solid var(--border); padding-top: 2rem;
+            max-width: 1200px; margin-inline: auto;
+        }
+        #back-to-top {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 50px; height: 50px; background-color: var(--primary);
+            color: white; border: none; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; visibility: hidden;
+            transform: translateY(20px); transition: all 0.4s ease;
+            box-shadow: var(--shadow-lg); z-index: 999;
+        }
+        #back-to-top:hover { transform: scale(1.1); }
+        #back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="wrapper nav-container">
+            <a href="#" class="logo" aria-label="Country Deli - Home">
+                <img src="https://placehold.co/100x100/E55934/FFFFFF?text=CD" alt="Country Deli & Grocery Logo">
+                Country Deli
+            </a>
+            <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="#why-us">Why Us?</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#hours-contact">Hours & Contact</a></li>
+                </ul>
+            </nav>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode"></button>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+                    <svg id="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    <svg id="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section with a background image and overlay -->
+        <section class="hero">
+            <div class="wrapper reveal">
+                <h1>Welcome to <span class="highlight">Country Deli & Grocery</span></h1>
+                <p>Your friendly neighborhood spot for delicious, freshly-made pizza, burgers, subs, and more. Quality food, fast and convenient.</p>
+                <div class="hero-actions">
+                    <a href="#menu" class="cta-btn">
+                        Explore Menu
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-us" class="content-section">
+            <div class="wrapper">
+                <h2 class="reveal">Why Choose Us?</h2>
+                <div class="features-grid">
+                    <div class="feature-card glass-card reveal" style="transition-delay: 100ms;">
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg></span>
+                        <h3>Fresh Ingredients</h3>
+                        <p class="description">We believe in quality you can taste. That's why we use only the freshest ingredients for our entire menu.</p>
+                    </div>
+                    <div class="feature-card glass-card reveal" style="transition-delay: 200ms;">
+                         <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                        <h3>Fast & Friendly Service</h3>
+                        <p class="description">In a hurry? We pride ourselves on quick, efficient service with a smile, getting you back to your day in no time.</p>
+                    </div>
+                     <div class="feature-card glass-card reveal" style="transition-delay: 300ms;">
+                         <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>
+                        <h3>A Local Favorite</h3>
+                        <p class="description">We're more than just a deli; we're a beloved part of the Dover community. Come see why your neighbors love us!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Menu section with real food images -->
+        <section id="menu" class="content-section">
+            <div class="wrapper">
+                <h2 class="reveal">Our Full Menu</h2>
+                <div class="menu-filters reveal">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="breakfast">Breakfast</button>
+                    <button class="filter-btn" data-filter="subs">Subs</button>
+                    <button class="filter-btn" data-filter="pizza">Pizza</button>
+                    <button class="filter-btn" data-filter="wings">Wings</button>
+                    <button class="filter-btn" data-filter="burgers">Burgers</button>
+                    <button class="filter-btn" data-filter="salads">Salads</button>
+                </div>
+                <div class="menu-grid">
+                    <div class="menu-category reveal" data-category="breakfast"><img class="menu-img" src="https://images.pexels.com/photos/2122280/pexels-photo-2122280.jpeg?auto=compress&cs=tinysrgb&w=800" alt="A freshly made breakfast croissant sandwich" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x440/FFF4E6/333?text=Breakfast';"><div class="menu-content"><h3>Breakfast</h3><p class="menu-desc">Start your day right with a hearty breakfast sandwich on your choice of bread.</p><div class="menu-items"><div class="menu-item"><span>Biscuit / Bagel / Muffin</span> <span>$3.49</span></div><div class="menu-item"><span>Croissant</span> <span>$3.49</span></div><div class="menu-item"><span>6" Breakfast Sub</span> <span>$6.49</span></div><div class="menu-item"><span>12" Breakfast Sub</span> <span>$8.49</span></div></div></div></div>
+                    <div class="menu-category reveal" data-category="subs"><img class="menu-img" src="https://img.freepik.com/premium-photo/brick-pressed-grilled-chicken-sandwich-wooden-platter_419341-147789.jpg" alt="A hot pressed panini sandwich" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x440/E6F2FF/333?text=Hot+Subs';"><div class="menu-content"><h3>Pressed & Grilled Subs</h3><p class="menu-desc">Served hot, melty, and full of flavor. A perfect lunch or dinner.</p><div class="menu-items"><div class="menu-item"><span>Cuban / Italian / Steak</span> <span>7" $6.99 / 12" $10.99</span></div><div class="menu-item"><span>Grilled Chicken Philly</span> <span>7" $7.49 / 12" $11.99</span></div><div class="menu-item"><span>Grilled Steak Philly</span> <span>7" $7.49 / 12" $11.99</span></div><div class="menu-item"><span>Spicy Country Chicken</span> <span>7" $7.49 / 12" $11.99</span></div></div></div></div>
+                    <div class="menu-category reveal" data-category="pizza"><img class="menu-img" src="https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=800" alt="A whole pepperoni pizza" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x440/FFE6E6/333?text=Pizza';"><div class="menu-content"><h3>Pizza</h3><p class="menu-desc">Hand-tossed with our signature sauce, mozzarella, and fresh ingredients.</p><div class="menu-items"><div class="menu-item"><span>Cheese or Pepperoni</span> <span>$9.99</span></div><div class="menu-item"><span>All Meat</span> <span>$12.99</span></div><div class="menu-item"><span>Supreme</span> <span>$12.99</span></div></div></div></div>
+                    <div class="menu-category reveal" data-category="wings"><img class="menu-img" src="https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800" alt="A basket of chicken wings" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x440/FFF0E6/333?text=Wings';"><div class="menu-content"><h3>Wings & Tenders</h3><p class="menu-desc">Crispy, juicy, and tossed in your favorite sauce. Perfect for sharing.</p><div class="menu-items"><div class="menu-item"><span>6 pc Wings</span> <span>$6.99</span></div><div class="menu-item"><span>12 pc Wings</span> <span>$12.99</span></div><div class="menu-item"><span>3 pc Tenders</span> <span>$4.99</span></div></div></div></div>
+                    <div class="menu-category reveal" data-category="burgers"><img class="menu-img" src="https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Juicy cheeseburger with toppings" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x440/E6FFEB/333?text=Burgers';"><div class="menu-content"><h3>Burgers & Sandwiches</h3><p class="menu-desc">Freshly grilled, classic deli style. Served with your choice of toppings.</p><div class="menu-items"><div class="menu-item"><span>Single Cheeseburger</span> <span>$4.69</span></div><div class="menu-item"><span>Bacon Cheeseburger</span> <span>$5.49</span></div><div class="menu-item"><span>Double Cheeseburger</span> <span>$6.99</span></div><div class="menu-item"><span>BLT</span> <span>$6.49</span></div></div></div></div>
+                    <div class="menu-category reveal" data-category="salads"><img class="menu-img" src="https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Fresh salad in a bowl" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x440/F2E6FF/333?text=Salads';"><div class="menu-content"><h3>Salad Bowls</h3><p class="menu-desc">Fresh, crisp, and made to order. A healthy and delicious option.</p><div class="menu-items"><div class="menu-item"><span>Grilled Chicken Salad</span> <span>$7.99</span></div><div class="menu-item"><span>Ham & Cheese Salad</span> <span>$7.99</span></div><div class="menu-item"><span>Chef Salad</span> <span>$7.99</span></div><div class="menu-item"><span>Garden Salad</span> <span>$5.99</span></div></div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hours-contact" class="content-section">
+            <div class="wrapper">
+                <h2 class="reveal">Hours & Contact</h2>
+                <div class="info-grid">
+                    <div class="info-card reveal" style="transition-delay: 100ms;">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Store Hours</h3>
+                        <ul class="hours-list" id="hours-list">
+                            <li data-day="0"><span>Sunday</span> <span>8:00 AM – 8:00 PM</span></li>
+                            <li data-day="1"><span>Monday</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li data-day="2"><span>Tuesday</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li data-day="3"><span>Wednesday</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li data-day="4"><span>Thursday</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li data-day="5"><span>Friday</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li data-day="6"><span>Saturday</span> <span>5:30 AM – 9:00 PM</span></li>
+                        </ul>
+                        <div id="hours-status"></div>
+                    </div>
+                    <div class="info-card reveal" style="transition-delay: 200ms;">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>Visit or Call</h3>
+                        <div class="contact-list">
+                           <p>Call in your order for quick pickup!</p>
+                           <a href="tel:+18137301044" class="contact-link">Call (813) 730-1044</a>
+                           <p style="margin-top: 1rem;">Our Address:</p>
+                           <a href="#" id="smart-map-link" class="contact-link">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-col"><h4>About Country Deli</h4><p>Your friendly neighborhood spot in Dover, FL for delicious, freshly-made food served fast. We're proud to be a part of the community.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#why-us">Why Us?</a></li><li><a href="#menu">Full Menu</a></li><li><a href="#hours-contact">Hours & Location</a></li></ul></div>
+            <div class="footer-col"><h4>Contact Us</h4><ul><li><a href="tel:+18137301044">Phone: (813) 730-1044</a></li><li><a id="footer-map-link" href="#">Address: 13606 US-92, Dover, FL 33527</a></li></ul>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright"><p>© 2025 Country Deli & Grocery. All Rights Reserved.</p></div>
+    </footer>
+    
+    <button id="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    </button>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Responsive Navigation ---
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navMenu.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            menuIcon.style.display = isExpanded ? 'block' : 'none';
+            closeIcon.style.display = isExpanded ? 'none' : 'block';
+        });
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            });
+        });
+        
+        // --- Scroll Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- Smart Map Link ---
+        const handleMapLink = (event) => {
+            event.preventDefault();
+            const address = encodeURIComponent('13606 US-92, Dover, FL 33527');
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const mapUrl = isIOS ? `https://maps.apple.com/?q=${address}` : `https://www.google.com/maps/search/?api=1&query=${address}`;
+            window.open(mapUrl, '_blank');
+        };
+        document.getElementById('smart-map-link').addEventListener('click', handleMapLink);
+        document.getElementById('footer-map-link').addEventListener('click', handleMapLink);
+        
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const sunIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+        const moonIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        const setDarkMode = (isDark) => {
+            body.classList.toggle('dark-mode', isDark);
+            themeToggle.innerHTML = isDark ? sunIcon : moonIcon;
+            try { localStorage.setItem('countrydeli_theme', isDark ? 'dark' : 'light'); } catch (e) {}
+        };
+        const savedTheme = (() => { try { return localStorage.getItem('countrydeli_theme'); } catch (e) { return null; } })();
+        setDarkMode(savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
+        themeToggle.addEventListener('click', () => setDarkMode(!body.classList.contains('dark-mode')));
+
+        // --- Dynamic Hours & Status ---
+        const setStoreStatus = () => {
+            try {
+                const nowET = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+                const currentDay = nowET.getDay();
+                const currentHour = nowET.getHours();
+                const currentMinute = nowET.getMinutes();
+                const hours = [
+                    { open: 8, close: 20 }, { open: 5.5, close: 21 }, { open: 5.5, close: 21 },
+                    { open: 5.5, close: 21 }, { open: 5.5, close: 21 }, { open: 5.5, close: 21 },
+                    { open: 5.5, close: 21 }
+                ];
+                const currentTime = currentHour + currentMinute / 60;
+                const todayHours = hours[currentDay];
+                const isOpen = todayHours && currentTime >= todayHours.open && currentTime < todayHours.close;
+                
+                document.querySelectorAll('#hours-list li').forEach(li => li.classList.remove('current-day'));
+                const currentDayLi = document.querySelector(`#hours-list li[data-day="${currentDay}"]`);
+                if (currentDayLi) currentDayLi.classList.add('current-day');
+                
+                const statusEl = document.getElementById('hours-status');
+                if (statusEl) {
+                    statusEl.className = isOpen ? 'open' : 'closed';
+                    statusEl.innerHTML = `<span class="status-dot"></span>Now ${isOpen ? 'Open' : 'Closed'}`;
+                }
+            } catch (error) {
+                console.error("Error setting store status:", error);
+                const statusEl = document.getElementById('hours-status');
+                if(statusEl) statusEl.innerHTML = "Call for hours";
+            }
+        };
+        setStoreStatus();
+        setInterval(setStoreStatus, 60000);
+
+        // --- Menu Filtering ---
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const menuItems = document.querySelectorAll('.menu-category');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const filter = button.dataset.filter;
+                menuItems.forEach(item => {
+                    item.classList.toggle('hidden', !(filter === 'all' || item.dataset.category === filter));
+                });
+            });
+        });
+
+        // --- Back to Top Button ---
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    </script>
+</body>
+</html>
