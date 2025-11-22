@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Deli & Grocery | Premium Fresh Food in Dover, FL</title>
+    <meta name="description"
+        content="Experience the best local flavors. Freshly-made pizza, burgers, and subs in a modern rustic setting. Dover, FL.">
+    <link rel="icon" href="icon.png" type="image/png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            /* Palette: Modern Rustic */
+            --primary: #C62828;
+            /* Deep Cardinal */
+            --primary-dark: #8E0000;
+            --accent: #558B2F;
+            /* Fresh Basil */
+            --bg-body: #F9F7F2;
+            /* Warm Parchment */
+            --text-main: #2C3E50;
+            /* Slate */
+            --text-light: #546E7A;
+            --white: #FFFFFF;
+            --navbar-bg: #1A1A1A;
+            /* Dark Navbar for contrast */
+            --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+            --radius: 16px;
+            --transition: cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+        }
+
+        /* --- Reset & Base --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- Utilities --- */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            background: var(--primary);
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
+            transition: var(--transition);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--primary-dark);
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(198, 40, 40, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--text-main);
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header h2 {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- Header --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 0;
+            z-index: 1000;
+            background: var(--navbar-bg);
+            /* Fixed dark background */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            /* White text for contrast */
+        }
+
+        .brand img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            color: rgba(255, 255, 255, 0.8);
+            /* Light text */
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--white);
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--accent);
+            color: var(--white);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .nav-cta:hover {
+            background: #33691E;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .bar {
+            width: 28px;
+            height: 3px;
+            background: var(--white);
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            overflow: hidden;
+            padding-top: 80px;
+            /* Offset for fixed header */
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110%;
+            /* For parallax */
+            background: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            z-index: -2;
+            transform: translateY(0);
+            will-change: transform;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 6rem;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            line-height: 1;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        /* --- Features Section --- */
+        .features {
+            background: var(--white);
+            position: relative;
+            z-index: 2;
+            margin-top: -50px;
+            /* Overlap hero */
+            border-radius: 40px 40px 0 0;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-body);
+            padding: 40px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            background: var(--white);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(0, 0, 0, 0.05);
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            display: inline-block;
+            background: var(--white);
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            box-shadow: var(--shadow-soft);
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        /* --- Menu Section --- */
+        .menu-category-container {
+            margin-bottom: 60px;
+        }
+
+        .menu-category-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .menu-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .item-info h4 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* --- Info Section (Hours & Contact) --- */
+        .info-section {
+            background: var(--text-main);
+            color: var(--white);
+            border-radius: 40px;
+            margin: 0 20px;
+            overflow: hidden;
+        }
+
+        .info-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .info-content {
+            padding: 80px;
+        }
+
+        .info-map {
+            min-height: 400px;
+            background: #ddd;
+            position: relative;
+        }
+
+        .info-map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(100%) contrast(1.2) opacity(0.8);
+            transition: var(--transition);
+        }
+
+        .info-map:hover iframe {
+            filter: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+        }
+
+        .hours-list li:last-child {
+            border: none;
+        }
+
+        .contact-details {
+            margin-top: 40px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--bg-body);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding-top: 30px;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--navbar-bg);
+                flex-direction: column;
+                padding: 40px;
+                gap: 20px;
+                transform: translateY(-150%);
+                transition: 0.5s ease;
+                box-shadow: var(--shadow-soft);
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .info-container {
+                grid-template-columns: 1fr;
+            }
+
+            .info-content {
+                padding: 40px 24px;
+            }
+
+            .info-map {
+                height: 300px;
+                min-height: auto;
+            }
+
+            .section-header h2 {
+                font-size: 3rem;
+            }
+
+            .menu-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="brand">
+                <img src="icon.png" alt="Logo">
+                Country Deli
+            </a>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#why-us" class="nav-link">Why Us</a></li>
+                <li><a href="#menu" class="nav-link">Menu</a></li>
+                <li><a href="#hours" class="nav-link">Hours</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="tel:+18137301044" class="nav-cta">Call (813) 730-1044</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">Est. 2025 • Dover, FL</span>
+            <h1>Fresh Food,<br>Done Right.</h1>
+            <p>Your neighborhood favorite for hand-tossed pizza, grilled subs, and fresh ingredients.</p>
+            <div class="hero-actions">
+                <a href="#menu" class="btn">View Menu</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=13606+US-92,+Dover,+FL+33527" target="_blank"
+                    class="btn btn-outline">Find Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="why-us" class="features section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Country Deli Standard</h2>
+                <p>We don't just make food; we craft experiences. Here's why our neighbors keep coming back.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🥬</div>
+                    <h3>Farm Fresh</h3>
+                    <p>We source local ingredients whenever possible to ensure maximum flavor and freshness in every
+                        bite.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Made to Order</h3>
+                    <p>No heat lamps here. Your food is prepared fresh right when you order it, just the way you like.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community First</h3>
+                    <p>We are proud to be a staple in Dover. Friendly service isn't a policy; it's who we are.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section-padding" style="background: var(--bg-body);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Menu</h2>
+                <p>From breakfast to dinner, we have something for everyone.</p>
+            </div>
+
+            <!-- Breakfast -->
+            <div class="menu-category-container">
+                <h3 class="menu-category-title">Breakfast</h3>
+                <div class="menu-list">
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Breakfast Sandwich</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Choice of bread</p>
+                        </div>
+                        <div class="item-price">$4.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Egg & Cheese Platter</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Served with toast</p>
+                        </div>
+                        <div class="item-price">$5.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pizza -->
+            <div class="menu-category-container">
+                <h3 class="menu-category-title">Pizza</h3>
+                <div class="menu-list">
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Cheese or Pepperoni</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Classic favorite</p>
+                        </div>
+                        <div class="item-price">$9.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>All Meat</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Loaded with meats</p>
+                        </div>
+                        <div class="item-price">$12.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Supreme</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Veggies & Meats</p>
+                        </div>
+                        <div class="item-price">$12.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subs -->
+            <div class="menu-category-container">
+                <h3 class="menu-category-title">Pressed & Grilled Subs</h3>
+                <div class="menu-list">
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Cuban</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Ham, pork, swiss, pickles</p>
+                        </div>
+                        <div class="item-price">$8.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Philly Cheesesteak</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Steak, onions, peppers, cheese</p>
+                        </div>
+                        <div class="item-price">$9.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Italian</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Salami, ham, pepperoni, provolone
+                            </p>
+                        </div>
+                        <div class="item-price">$8.99</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Burgers -->
+            <div class="menu-category-container">
+                <h3 class="menu-category-title">Burgers & Sandwiches</h3>
+                <div class="menu-list">
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Classic Burger</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Lettuce, tomato, onion</p>
+                        </div>
+                        <div class="item-price">$7.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Cheeseburger</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">American cheese, LTO</p>
+                        </div>
+                        <div class="item-price">$8.49</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Bacon Cheeseburger</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Crispy bacon, cheese, LTO</p>
+                        </div>
+                        <div class="item-price">$9.49</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wings -->
+            <div class="menu-category-container">
+                <h3 class="menu-category-title">Wings & Tenders</h3>
+                <div class="menu-list">
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Wings (6pc)</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Buffalo, BBQ, or Plain</p>
+                        </div>
+                        <div class="item-price">$7.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Wings (10pc)</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">Buffalo, BBQ, or Plain</p>
+                        </div>
+                        <div class="item-price">$12.99</div>
+                    </div>
+                    <div class="menu-item-card">
+                        <div class="item-info">
+                            <h4>Chicken Tenders (3pc)</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-light);">With fries</p>
+                        </div>
+                        <div class="item-price">$8.99</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section id="hours" class="section-padding">
+        <div class="container">
+            <div class="info-section">
+                <div class="info-container">
+                    <div class="info-content">
+                        <h2 style="margin-bottom: 30px; color: var(--accent);">Opening Hours</h2>
+                        <ul class="hours-list">
+                            <li><span>Mon - Fri</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li><span>Saturday</span> <span>5:30 AM – 9:00 PM</span></li>
+                            <li><span>Sunday</span> <span>8:00 AM – 8:00 PM</span></li>
+                        </ul>
+
+                        <div class="contact-details" id="contact">
+                            <h2 style="margin-bottom: 30px; color: var(--accent);">Get In Touch</h2>
+                            <div class="contact-row">
+                                <div class="contact-icon">📞</div>
+                                <div>
+                                    <div style="font-size: 0.9rem; opacity: 0.7;">Phone</div>
+                                    <a href="tel:+18137301044"
+                                        style="font-size: 1.2rem; font-weight: 600; color: var(--white); text-decoration: underline;">(813)
+                                        730-1044</a>
+                                </div>
+                            </div>
+                            <div class="contact-row">
+                                <div class="contact-icon">📍</div>
+                                <div>
+                                    <div style="font-size: 0.9rem; opacity: 0.7;">Location</div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query=13606+US-92,+Dover,+FL+33527"
+                                        target="_blank"
+                                        style="font-size: 1.2rem; font-weight: 600; color: var(--white); text-decoration: underline;">13606
+                                        US-92, Dover, FL 33527</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3522.567890123456!2d-82.22345678901234!3d28.01234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88c2c9b8b8b8b8b9%3A0x8b8b8b8b8b8b8b8b!2s13606%20US-92%2C%20Dover%2C%20FL%2033527!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                            allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="#" class="footer-logo">Country Deli</a>
+            <div class="footer-links">
+                <a href="#why-us">About</a>
+                <a href="#menu">Menu</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Country Deli & Grocery. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Parallax Effect for Hero
+        const heroBg = document.getElementById('hero-bg');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            heroBg.style.transform = 'translateY(' + (scrollPosition * 0.5) + 'px)';
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section-header, .feature-card, .menu-item-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
